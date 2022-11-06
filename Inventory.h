@@ -12,6 +12,7 @@ private:
 
 public:
 	Inventory();
+	Inventory operator= (const Inventory inv);
 	Box getBox(int id);
 	void putBox(Box box);
 	string display();

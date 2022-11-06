@@ -15,6 +15,11 @@ using std::ifstream;
 // Default constructor
 Inventory::Inventory() {}
 
+Inventory Inventory::operator =(const Inventory inv) {
+	this->boxVector = inv.boxVector;
+	return *this;
+}
+
 void Inventory::putBox(Box input_box) {
 	boxVector.push_back(input_box);
 }
@@ -48,7 +53,7 @@ string Inventory::display() {
 
 void Inventory::save() {
 	ofstream file;
-	// TODO: Change write permissions
+	// TODO Change write permissions
 	file.open("inventory.txt", ios::out | ios::app);
 
 	Box first = boxVector.at(0);
@@ -65,6 +70,10 @@ void Inventory::save() {
 }
 
 void Inventory::load() {
+	if (!boxVector.empty()) {
+		return;
+	}
+
 	ifstream file;
 	file.open("inventory.txt", ios::in);
 	string line;

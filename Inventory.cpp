@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <iomanip>
 
 using std::string;
 using std::to_string;
@@ -37,18 +38,20 @@ Box Inventory::getBox(int id) {
 	return result;
 }
 
-string Inventory::display() {
-	string result = "";
-	string spaces = "      ";
+void Inventory::display() {
+	printTable("ID", this->numWidth + 1);
+	printTable("Description", this->stringWidth);
+	printTable("Quantity", this->numWidth);
+	std::cout << std::endl;
 
 	for (int index = 0; index < boxVector.size(); index++) {
 		Box current = boxVector.at(index);
-		result +=  to_string(current.getId()) + spaces 
-			+ current.getDescription() + spaces
-			+ to_string(current.getWeight()) + "\n";
-	}
 
-	return result;
+		printTable(current.getId(), this->numWidth);
+		printTable(current.getDescription(), this->stringWidth);
+		printTable(current.getWeight(), this->numWidth);
+		std::cout << std::endl;
+	}
 }
 
 void Inventory::save() {
@@ -102,4 +105,10 @@ std::vector<string> Inventory::split(string input) {
 	}
 	result.push_back(input.substr(last));
 	return result;
+}
+
+
+template<typename T> 
+void Inventory::printTable(T t, const int& width) {
+	std::cout << std::left << std::setw(width) << std::setfill(' ') << t;
 }
